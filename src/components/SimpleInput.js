@@ -2,48 +2,34 @@ import { useState, useRef ,useEffect} from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  const [isValid,setIsValid] = useState(false)
   const [isTouched,setIsTouched] = useState(false)
   const nameRef = useRef();
+  const isValid = enteredName.trim() !== ""
+  const isEnteredInvalid = isTouched && !isValid
 
-  useEffect(()=>{
-    if(isValid){
-      console.log('A name has been passed');
-    }
-  },[isValid])
+
 
   const onBlurHandler = e =>{
     setIsTouched(true)
-    if(enteredName.trim() === ''){
-      setIsValid(false)
-    }
+    
   }
 
   const onNameChangeHandler = (e) => {
     setEnteredName(e.target.value);
     setIsTouched(true)
-    if(enteredName.trim() !== ''){
-      setIsValid(true)
-    }
+    
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     setIsTouched(true)
-    if(enteredName.trim() === ''){
-      setIsValid(false)
-      return;
-    }
-    setIsValid(true)
+    
     console.log(enteredName);
 
-    const value = nameRef.current.value
-    console.log(value);
-
     setEnteredName(' ')
+    setIsTouched(false)
   };
 
-  const isEnteredInvalid = isTouched && !isValid
 
   const formClass = isEnteredInvalid ? 'form-control invalid' : 'form-control '
 
