@@ -12,8 +12,19 @@ const SimpleInput = (props) => {
     }
   },[isValid])
 
+  const onBlurHandler = e =>{
+    setIsTouched(true)
+    if(enteredName.trim() === ''){
+      setIsValid(false)
+    }
+  }
+
   const onNameChangeHandler = (e) => {
     setEnteredName(e.target.value);
+    setIsTouched(true)
+    if(enteredName.trim() !== ''){
+      setIsValid(true)
+    }
   };
 
   const submitHandler = (e) => {
@@ -47,6 +58,7 @@ const SimpleInput = (props) => {
           id="name"
           onChange={onNameChangeHandler}
           value={enteredName}
+          onBlur={onBlurHandler}
         />
       </div>
       {isEnteredInvalid && <p className="error-text">A name is required</p>}
